@@ -1,0 +1,478 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>背景对比演示 - ONE DAY</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Microsoft YaHei', sans-serif;
+            background: #f5f5f5;
+            padding: 20px;
+        }
+
+        .demo-header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .demo-header h1 {
+            color: #333;
+            margin-bottom: 10px;
+        }
+
+        .demo-header p {
+            color: #666;
+        }
+
+        .section {
+            background: white;
+            border-radius: 12px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        .section h2 {
+            color: #333;
+            margin-bottom: 20px;
+            font-size: 24px;
+        }
+
+        .background-comparison {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .bg-item {
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        .bg-item-label {
+            background: #f0f0f0;
+            padding: 10px 15px;
+            font-weight: bold;
+            color: #333;
+            border-bottom: 2px solid #ddd;
+        }
+
+        .bg-preview {
+            height: 200px;
+            background-size: cover;
+            background-position: center;
+            position: relative;
+        }
+
+        /* 方案A：使用用户提供的图片 */
+        .bg-image-1 {
+            background-image: url('./picture/蓝底水彩哭脸.jpg');
+        }
+
+        .bg-image-2 {
+            background-image: url('./picture/水彩笑脸改色.jpg');
+        }
+
+        .bg-image-3 {
+            background-image: url('./picture/哭笑拼接脸.jpg');
+        }
+
+        /* 方案B：使用CSS生成 */
+        .bg-css-1 {
+            background: #1E3A8A;
+            position: relative;
+        }
+
+        .bg-css-1::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-image:
+                url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cpath d='M20 30 Q30 25 40 30' stroke='rgba(30,64,175,0.3)' stroke-width='2' fill='none'/%3E%3Ccircle cx='30' cy='35' r='1.5' fill='rgba(30,64,175,0.3)'/%3E%3C/svg%3E"),
+                url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cpath d='M60 50 Q70 45 80 50' stroke='rgba(30,64,175,0.25)' stroke-width='2' fill='none'/%3E%3Ccircle cx='70' cy='55' r='1.5' fill='rgba(30,64,175,0.25)'/%3E%3C/svg%3E"),
+                url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cpath d='M10 70 Q20 65 30 70' stroke='rgba(30,64,175,0.35)' stroke-width='2' fill='none'/%3E%3Ccircle cx='20' cy='75' r='1.5' fill='rgba(30,64,175,0.35)'/%3E%3C/svg%3E");
+            background-size: 80px;
+            background-position:
+                20px 30px,
+                150px 80px,
+                80px 120px;
+            opacity: 0.8;
+        }
+
+        .bg-css-2 {
+            background: #FEF3C7;
+            position: relative;
+        }
+
+        .bg-css-2::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-image:
+                url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cpath d='M20 25 Q30 30 40 25' stroke='rgba(245,158,11,0.3)' stroke-width='2' fill='none'/%3E%3Ccircle cx='30' cy='30' r='1.5' fill='rgba(245,158,11,0.3)'/%3E%3C/svg%3E"),
+                url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cpath d='M60 45 Q70 50 80 45' stroke='rgba(245,158,11,0.25)' stroke-width='2' fill='none'/%3E%3Ccircle cx='70' cy='50' r='1.5' fill='rgba(245,158,11,0.25)'/%3E%3C/svg%3E"),
+                url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cpath d='M10 65 Q20 70 30 65' stroke='rgba(245,158,11,0.35)' stroke-width='2' fill='none'/%3E%3Ccircle cx='20' cy='70' r='1.5' fill='rgba(245,158,11,0.35)'/%3E%3C/svg%3E");
+            background-size: 80px;
+            background-position:
+                25px 25px,
+                160px 70px,
+                90px 130px;
+            opacity: 0.8;
+        }
+
+        .bg-css-3 {
+            background:
+                repeating-linear-gradient(
+                    90deg,
+                    #1E3A8A 0px,
+                    #1E3A8A 100px,
+                    #FEF3C7 100px,
+                    #FEF3C7 200px
+                ),
+                repeating-linear-gradient(
+                    0deg,
+                    rgba(30,58,138,0.5) 0px,
+                    rgba(30,58,138,0.5) 100px,
+                    rgba(254,243,199,0.5) 100px,
+                    rgba(254,243,199,0.5) 200px
+                );
+            background-blend-mode: normal;
+            position: relative;
+        }
+
+        .bg-css-3::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-image:
+                url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cpath d='M20 25 Q30 30 40 25' stroke='rgba(0,0,0,0.15)' stroke-width='2' fill='none'/%3E%3C/svg%3E"),
+                url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cpath d='M60 45 Q70 40 80 45' stroke='rgba(0,0,0,0.15)' stroke-width='2' fill='none'/%3E%3C/svg%3E"),
+                url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cpath d='M10 65 Q20 70 30 65' stroke='rgba(0,0,0,0.15)' stroke-width='2' fill='none'/%3E%3C/svg%3E");
+            background-size: 60px;
+            background-position:
+                20px 20px,
+                120px 60px,
+                70px 100px;
+            opacity: 0.6;
+        }
+
+        .thumbnail-demo {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+            margin-top: 20px;
+        }
+
+        .thumbnail-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .thumbnail {
+            width: 100px;
+            height: 100px;
+            border-radius: 8px;
+            border: 2px solid #ddd;
+            background-size: cover;
+            background-position: center;
+        }
+
+        .thumbnail.locked {
+            background: #f0f0f0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 48px;
+            color: #999;
+        }
+
+        .thumbnail-label {
+            font-size: 12px;
+            color: #666;
+        }
+
+        .info-box {
+            background: #e3f2fd;
+            border-left: 4px solid #2196F3;
+            padding: 15px;
+            border-radius: 4px;
+            margin-top: 20px;
+        }
+
+        .info-box h4 {
+            color: #1976D2;
+            margin-bottom: 8px;
+        }
+
+        .info-box ul {
+            margin-left: 20px;
+            color: #555;
+        }
+
+        .recommendation {
+            background: #fff3e0;
+            border-left: 4px solid #FF9800;
+            padding: 15px;
+            border-radius: 4px;
+            margin-top: 20px;
+        }
+
+        .recommendation h4 {
+            color: #F57C00;
+            margin-bottom: 8px;
+        }
+
+        .controls {
+            margin-top: 20px;
+            display: flex;
+            gap: 10px;
+        }
+
+        .btn {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: all 0.3s;
+        }
+
+        .btn-primary {
+            background: #2196F3;
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: #1976D2;
+        }
+
+        .fullscreen-demo {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            z-index: 1000;
+            display: none;
+        }
+
+        .fullscreen-demo.active {
+            display: block;
+        }
+
+        .fullscreen-demo .demo-content {
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+        }
+
+        .close-fullscreen {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: rgba(255,255,255,0.9);
+            border: none;
+            padding: 10px 20px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 16px;
+            z-index: 1001;
+        }
+
+        .nav-buttons {
+            position: absolute;
+            bottom: 30px;
+            display: flex;
+            gap: 15px;
+        }
+
+        .nav-btn {
+            background: rgba(255,255,255,0.9);
+            border: none;
+            padding: 12px 24px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+    </style>
+</head>
+<body>
+    <div class="demo-header">
+        <h1>🎨 ONE DAY 背景对比演示</h1>
+        <p>选择背景实现方案 - 图片素材 vs CSS生成</p>
+    </div>
+
+    <!-- 方案对比 -->
+    <div class="section">
+        <h2>📊 背景对比</h2>
+        <div class="background-comparison">
+            <!-- 图片方案 -->
+            <div class="bg-item">
+                <div class="bg-item-label">方案A：图片素材（你提供的）</div>
+                <div class="bg-preview bg-image-1"></div>
+            </div>
+            <div class="bg-item">
+                <div class="bg-item-label">方案A：图片素材（你提供的）</div>
+                <div class="bg-preview bg-image-2"></div>
+            </div>
+            <div class="bg-item">
+                <div class="bg-item-label">方案A：图片素材（你提供的）</div>
+                <div class="bg-preview bg-image-3"></div>
+            </div>
+
+            <!-- CSS方案 -->
+            <div class="bg-item">
+                <div class="bg-item-label">方案B：CSS生成</div>
+                <div class="bg-preview bg-css-1"></div>
+            </div>
+            <div class="bg-item">
+                <div class="bg-item-label">方案B：CSS生成</div>
+                <div class="bg-preview bg-css-2"></div>
+            </div>
+            <div class="bg-item">
+                <div class="bg-item-label">方案B：CSS生成</div>
+                <div class="bg-preview bg-css-3"></div>
+            </div>
+        </div>
+
+        <div class="info-box">
+            <h4>方案对比说明</h4>
+            <ul>
+                <li><strong>方案A（图片素材）</strong>：使用你提供的专业设计图片，视觉效果更自然、艺术感强</li>
+                <li><strong>方案B（CSS生成）</strong>：纯代码生成，加载更快，但视觉效果相对简单</li>
+            </ul>
+        </div>
+
+        <div class="recommendation">
+            <h4>💡 建议</h4>
+            <p><strong>推荐使用方案A（图片素材）</strong>，原因如下：</p>
+            <ul>
+                <li>视觉效果更好，水彩效果更自然</li>
+                <li>符合游戏的艺术风格定位</li>
+                <li>已经有现成的高质量素材</li>
+                <li>可以配合缩略图保持一致性</li>
+            </ul>
+        </div>
+
+        <div class="controls">
+            <button class="btn btn-primary" onclick="openFullscreen('image')">全屏预览：图片方案</button>
+            <button class="btn btn-primary" onclick="openFullscreen('css')">全屏预览：CSS方案</button>
+        </div>
+    </div>
+
+    <!-- 缩略图演示 -->
+    <div class="section">
+        <h2>🖼️ 成就弹窗缩略图演示</h2>
+        <div class="thumbnail-demo">
+            <div class="thumbnail-item">
+                <div class="thumbnail" style="background-image: url('./picture/蓝底水彩哭脸.jpg');"></div>
+                <span class="thumbnail-label">背景1 ✓</span>
+            </div>
+            <div class="thumbnail-item">
+                <div class="thumbnail locked">?</div>
+                <span class="thumbnail-label">未解锁</span>
+            </div>
+            <div class="thumbnail-item">
+                <div class="thumbnail locked">?</div>
+                <span class="thumbnail-label">未解锁</span>
+            </div>
+        </div>
+
+        <div class="info-box">
+            <h4>缩略图实现建议</h4>
+            <ul>
+                <li>使用原图片的压缩版本作为缩略图</li>
+                <li>未解锁状态显示问号图标</li>
+                <li>缩略图尺寸：100x100px</li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- 全屏演示 -->
+    <div id="fullscreen-demo" class="fullscreen-demo">
+        <button class="close-fullscreen" onclick="closeFullscreen()">关闭 ✕</button>
+        <div class="demo-content">
+            <h1 style="font-size: 48px; margin-bottom: 20px;">ONE DAY</h1>
+            <p style="font-size: 24px; margin-bottom: 40px;">目标：改变你的一天，你要<span class="win-text" style="color: #F59E0B; font-weight: bold;">赢</span>！</p>
+            <button style="padding: 15px 40px; font-size: 20px; background: white; border: none; border-radius: 8px; cursor: pointer;">开始游戏</button>
+        </div>
+        <div class="nav-buttons">
+            <button class="nav-btn" onclick="changeBg(0)">背景1：哭脸</button>
+            <button class="nav-btn" onclick="changeBg(1)">背景2：笑脸</button>
+            <button class="nav-btn" onclick="changeBg(2)">背景3：混合</button>
+        </div>
+    </div>
+
+    <script>
+        let currentMode = 'image';
+        let currentBg = 0;
+
+        const imageBgs = [
+            './picture/蓝底水彩哭脸.jpg',
+            './picture/水彩笑脸改色.jpg',
+            './picture/哭笑拼接脸.jpg'
+        ];
+
+        const cssBgs = [
+            'radial-gradient(circle, #1E3A8A 0%, #1E3A8A 100%)',
+            'radial-gradient(circle, #FEF3C7 0%, #FEF3C7 100%)',
+            'repeating-linear-gradient(90deg, #1E3A8A 0px, #1E3A8A 100px, #FEF3C7 100px, #FEF3C7 200px)'
+        ];
+
+        function openFullscreen(mode) {
+            currentMode = mode;
+            document.getElementById('fullscreen-demo').classList.add('active');
+            changeBg(0);
+        }
+
+        function closeFullscreen() {
+            document.getElementById('fullscreen-demo').classList.remove('active');
+        }
+
+        function changeBg(index) {
+            currentBg = index;
+            const demo = document.getElementById('fullscreen-demo');
+
+            if (currentMode === 'image') {
+                demo.style.backgroundImage = `url('${imageBgs[index]}')`;
+                demo.style.backgroundSize = 'cover';
+                demo.style.backgroundPosition = 'center';
+            } else {
+                demo.style.background = cssBgs[index];
+                demo.style.backgroundSize = 'auto';
+            }
+        }
+
+        // 按ESC关闭全屏
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') {
+                closeFullscreen();
+            }
+        });
+    </script>
+</body>
+</html>

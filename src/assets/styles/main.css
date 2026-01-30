@@ -1,0 +1,324 @@
+/* 全局样式重置 */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html, body {
+  height: 100%;
+  overflow-x: hidden;
+}
+
+body {
+  font-family: 'Microsoft YaHei', 'PingFang SC', sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* 主容器 */
+#app {
+  min-height: 100vh;
+  width: 100%;
+  transition: background 0.8s ease;
+}
+
+/* 背景系统 - 使用图片素材 */
+.app-container {
+  min-height: 100vh;
+  width: 100%;
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+  position: relative;
+}
+
+.background-level-0 {
+  background-image: url('/picture/蓝底水彩哭脸.jpg');
+}
+
+.background-level-1 {
+  background-image: url('/picture/水彩笑脸改色.jpg');
+}
+
+.background-level-2 {
+  background-image: url('/picture/哭笑拼接脸.jpg');
+}
+
+/* 内容容器，确保文字可读性 */
+.content-wrapper {
+  position: relative;
+  z-index: 1;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+
+/* 半透明背景层 */
+.content-overlay {
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  border-radius: 16px;
+  padding: 40px;
+  max-width: 800px;
+  width: 100%;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+}
+
+/* 文字颜色 */
+.lose-text {
+  color: #1E40AF;
+  font-weight: bold;
+}
+
+.win-text {
+  color: #F59E0B;
+  font-weight: bold;
+}
+
+/* 可编辑文字 */
+.editable-text {
+  cursor: text;
+  border-bottom: 1px solid transparent;
+  transition: border-color 0.2s;
+  padding: 0 2px;
+}
+
+.editable-text:hover {
+  border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+.editable-text:focus {
+  outline: none;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.5);
+}
+
+/* 按钮样式 */
+.btn {
+  padding: 12px 32px;
+  border: none;
+  border-radius: 8px;
+  font-size: 16px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  background: white;
+  color: #333;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
+}
+
+.btn:active {
+  transform: translateY(0);
+}
+
+.btn-primary {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+}
+
+.btn-large {
+  padding: 16px 48px;
+  font-size: 18px;
+}
+
+/* 标题样式 */
+h1 {
+  font-size: 48px;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+h2 {
+  font-size: 32px;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 16px;
+}
+
+p {
+  font-size: 18px;
+  line-height: 1.8;
+  color: #333;
+  margin-bottom: 16px;
+}
+
+/* 故事选项按钮 */
+.option-btn {
+  display: inline-block;
+  padding: 8px 20px;
+  margin: 8px;
+  border: 2px solid #667eea;
+  border-radius: 6px;
+  background: white;
+  color: #667eea;
+  font-size: 16px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.option-btn:hover {
+  background: #667eea;
+  color: white;
+}
+
+.option-btn.selected {
+  background: #667eea;
+  color: white;
+}
+
+/* 故事结果 */
+.story-result {
+  margin-top: 20px;
+  padding: 20px;
+  background: rgba(255, 255, 255, 0.5);
+  border-radius: 8px;
+  line-height: 1.8;
+  animation: fadeIn 0.5s ease;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* 成功提示 */
+.success-message {
+  margin-top: 20px;
+  padding: 16px;
+  background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+  color: white;
+  border-radius: 8px;
+  text-align: center;
+  animation: slideIn 0.5s ease;
+}
+
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* 成就弹窗 */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  animation: fadeIn 0.3s ease;
+}
+
+.modal-content {
+  background: white;
+  border-radius: 16px;
+  padding: 32px;
+  max-width: 500px;
+  width: 90%;
+  max-height: 80vh;
+  overflow-y: auto;
+}
+
+.achievement-item {
+  display: flex;
+  align-items: center;
+  padding: 16px;
+  margin: 12px 0;
+  background: #f5f5f5;
+  border-radius: 8px;
+}
+
+.achievement-thumbnail {
+  width: 80px;
+  height: 80px;
+  border-radius: 8px;
+  background-size: cover;
+  background-position: center;
+  margin-right: 16px;
+  flex-shrink: 0;
+}
+
+.achievement-thumbnail.locked {
+  background: #e0e0e0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 36px;
+  color: #999;
+}
+
+/* 响应式设计 */
+@media (max-width: 768px) {
+  h1 {
+    font-size: 36px;
+  }
+
+  h2 {
+    font-size: 24px;
+  }
+
+  p {
+    font-size: 16px;
+  }
+
+  .content-overlay {
+    padding: 24px;
+  }
+
+  .btn-large {
+    padding: 12px 32px;
+    font-size: 16px;
+  }
+}
+
+/* 选项转场动画 - 内容淡入淡出 */
+.content-overlay.fade-out {
+  animation: contentFadeOut 0.8s ease forwards;
+}
+
+.content-overlay.fade-in {
+  animation: contentFadeIn 0.8s ease forwards;
+}
+
+@keyframes contentFadeOut {
+  0% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+@keyframes contentFadeIn {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
